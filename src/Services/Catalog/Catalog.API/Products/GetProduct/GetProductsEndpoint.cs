@@ -9,8 +9,8 @@
         {
             app.MapGet("/products", async (ISender sender) =>
             {
-                var request = new GetProductsQuery();
-                var result = await sender.Send(request);
+                var query = new GetProductsQuery();
+                var result = await sender.Send(query);
                 var response = result.Adapt<GetProductsResponse>();
 
                 return Results.Json(response);

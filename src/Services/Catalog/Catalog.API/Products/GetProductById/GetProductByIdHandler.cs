@@ -3,12 +3,12 @@ namespace Catalog.API.Products.GetProductById
     public record GetProductByIdQuery(Guid Id): IQuery<GetProductByIdResult>;
     public record GetProductByIdResult(Product Product);
 
-    public class GetProductByIdHandler(IDocumentSession session, ILogger<GetProductByIdHandler> logger)
+    public class GetProductByIdQueryHandler(IDocumentSession session, ILogger<GetProductByIdQueryHandler> logger)
         : IQueryHandler<GetProductByIdQuery, GetProductByIdResult>
     {
         public async Task<GetProductByIdResult> Handle(GetProductByIdQuery query, CancellationToken cancellationToken)
         {
-            logger.LogInformation($"{nameof(GetProductByIdHandler)}.{nameof(Handle)} called with {query}");
+            logger.LogInformation($"{nameof(GetProductByIdQueryHandler)}.{nameof(Handle)} called with {query}");
             
             var product = await session.LoadAsync<Product>(query.Id, cancellationToken);
 

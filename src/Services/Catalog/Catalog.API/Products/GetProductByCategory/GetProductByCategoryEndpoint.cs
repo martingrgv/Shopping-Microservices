@@ -9,8 +9,8 @@ namespace Catalog.API.Products.GetProductByCategory
         {
             app.MapGet("/products/category/{category}", async (string category, ISender sender) =>
             {
-                var request = new GetProductByCategoryQuery(category);
-                var result = await sender.Send(request);
+                var query = new GetProductByCategoryQuery(category);
+                var result = await sender.Send(query);
                 var response = result.Adapt<GetProductByCategoryResponse>();
 
                 return Results.Json(response);
