@@ -9,8 +9,8 @@ public class GetBasketEndpoint : ICarterModule
     {
         app.MapGet("/basket/{userName}", async (string userName, ISender sender) =>
         {
-            var query = new GetBasketRequest(userName);
-            var result = sender.Send(query);
+            var query = new GetBasketQuery(userName);
+            var result = await sender.Send(query);
             var response = result.Adapt<GetBasketResponse>();
 
             return Results.Json(response);

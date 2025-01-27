@@ -20,6 +20,6 @@ public class StoreBasketHandler : ICommandHandler<StoreBasketCommand, StoreBaske
     {
         ShoppingCart cart = command.Cart;
 
-        return new StoreBasketResult("UserName");
+        return new StoreBasketResult(cart.UserName);
     }
 }
