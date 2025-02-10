@@ -2,6 +2,8 @@ using Marten;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddScoped<IBasketRepository, BasketRepository>();
+    
 builder.Services.AddCarter();
 
 builder.Services.AddMediatR(configuration =>
