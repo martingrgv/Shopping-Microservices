@@ -1,5 +1,3 @@
-using Marten;
-
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
@@ -20,9 +18,11 @@ builder.Services.AddMarten(options =>
     options.DisableNpgsqlLogging = true;
 }).UseLightweightSessions();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
 var app = builder.Build();
 
 app.MapCarter();
+app.UseExceptionHandler(options => { });
 
 app.Run();
