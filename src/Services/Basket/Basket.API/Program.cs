@@ -1,7 +1,25 @@
+using Discount.Grpc;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Application Services
+builder.Services.AddCarter();
+builder.Services.AddMediatR(configuration =>
+{
+    configuration.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
+});
+
+// Data Services
+builder.Services.AddMarten(options =>
+{
+    options.Connection(builder.Configuration.GetConnectionString("BasketDb")!);
+    options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
+    options.DisableNpgsqlLogging = true;
+}).UseLightweightSessions();
 
 builder.Services.AddScoped<IBasketRepository, BasketRepository>();
 builder.Services.Decorate<IBasketRepository, CachedBasketRepository>();
@@ -11,23 +29,14 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
     options.InstanceName = "Basket";
 });
-    
-builder.Services.AddCarter();
 
-builder.Services.AddMediatR(configuration =>
+// Grpc Services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(options =>
 {
-    configuration.RegisterServicesFromAssembly(typeof(Program).Assembly);
-    configuration.AddOpenBehavior(typeof(ValidationBehavior<,>));
-    configuration.AddOpenBehavior(typeof(LoggingBehavior<,>));
+    options.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
 });
 
-builder.Services.AddMarten(options =>
-{
-    options.Connection(builder.Configuration.GetConnectionString("BasketDb")!);
-    options.Schema.For<ShoppingCart>().Identity(x => x.UserName);
-    options.DisableNpgsqlLogging = true;
-}).UseLightweightSessions();
-
+// Cross-Cutting Services
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 builder.Services.AddHealthChecks()
     .AddNpgSql(builder.Configuration.GetConnectionString("BasketDb")!)
