@@ -17,7 +17,7 @@ public class DiscountService(DiscountDbContext dbContext, ILogger<DiscountServic
 
         if (coupon is null)
         {
-            coupon = new Coupon
+            return new CouponModel
             {
                 ProductName = "No Discount",
                 Amount = 0
