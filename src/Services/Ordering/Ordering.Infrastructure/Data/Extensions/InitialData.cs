@@ -25,15 +25,15 @@ internal class InitialData
     {
         get
         {
-            var address1 = Address.Of("Martin", "Wilson", "martinwillson@mail.com", "Sofia", "Bulgaria", null, "1000");
-            var address2 = Address.Of("Ivan", "Trayanov", "ivantrayanov@mail.com", "Sofia", "Bulgaria", null, "1000");
+            var address1 = Address.Of("Martin", "Wilson", "martinwillson@mail.com", "Sofia", "Bulgaria", string.Empty, "1000");
+            var address2 = Address.Of("Ivan", "Trayanov", "ivantrayanov@mail.com", "Sofia", "Bulgaria", string.Empty, "1000");
 
             var payment1 = Payment.Of("Martin Wilson", "1111222233334444", "12/31", "123", 1);
             var payment2 = Payment.Of("Ivan Trayanov", "3333111155559999", "03/28", "981", 2);
 
             var order1 = Order.Create(OrderId.Of(Guid.NewGuid()),
                 CustomerId.Of(new Guid("e761c0e1-6f6c-4ef5-aaa7-010e76d15a0d")),
-                OrderName.Of("Order 1"),
+                OrderName.Of("ORD_1"),
                 shippingAddress:  address1,
                 billingAddress: address1,
                 payment1);
@@ -43,7 +43,7 @@ internal class InitialData
             
             var order2 = Order.Create(OrderId.Of(Guid.NewGuid()),
                 CustomerId.Of(new Guid("80e7401f-e0ee-4a96-a56e-ce4195bb6078")),
-                OrderName.Of("Order 2"),
+                OrderName.Of("ORD_2"),
                 shippingAddress:  address2,
                 billingAddress: address2,
                 payment2);
