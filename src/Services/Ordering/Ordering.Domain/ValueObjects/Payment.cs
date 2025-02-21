@@ -2,6 +2,11 @@ namespace Ordering.Domain.ValueObjects;
 
 public record Payment
 {
+    private Payment()
+    {
+        // For EF Core
+    }
+
     private const int CVVLength = 3;
     private Payment(string cardName,
         string cardNumber,

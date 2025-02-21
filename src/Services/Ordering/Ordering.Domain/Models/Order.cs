@@ -2,6 +2,13 @@ namespace Ordering.Domain.Models;
 
 public class Order : Aggregate<OrderId>
 {
+    private decimal _totalPrice;
+    
+    private Order()
+    {
+        // For EFCore    
+    }
+    
     private Order(OrderId id,
         CustomerId customerId,
         OrderName orderName,
@@ -30,7 +37,8 @@ public class Order : Aggregate<OrderId>
 
     public decimal TotalPrice
     {
-        get => OrderItems.Sum(x => x.Price * x.Quantity);
+        get => _totalPrice;
+        private set => _totalPrice = OrderItems.Sum(x => x.Price * x.Quantity);
     }
 
     public static Order Create(OrderId id,

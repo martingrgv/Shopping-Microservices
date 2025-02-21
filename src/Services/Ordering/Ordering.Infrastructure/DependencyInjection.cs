@@ -9,6 +9,11 @@ public static class DependencyInjection
         (this IServiceCollection services, IConfiguration configuration)
     {
         string connecitonString = configuration.GetConnectionString("OrderingDb");
+        services.AddDbContext<ApplicationDbContext>(options =>
+        {
+            
+            options.UseSqlServer(connecitonString);
+        });
         
         return services;
     }
