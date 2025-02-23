@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Ordering.Application.Data;
 using Ordering.Infrastructure.Data.Interceptors;
 
 namespace Ordering.Infrastructure;
@@ -20,6 +21,8 @@ public static class DependencyInjection
             options.AddInterceptors(sp.GetService<ISaveChangesInterceptor>());
             options.UseSqlServer(connecitonString);
         });
+
+        services.AddScoped<IApplicationDbContext, ApplicationDbContext>();
         
         return services;
     }
