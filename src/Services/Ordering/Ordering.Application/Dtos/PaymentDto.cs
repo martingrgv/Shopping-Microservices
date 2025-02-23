@@ -1,6 +1,6 @@
 namespace Ordering.Application.Dtos;
 
-public class PaymentDto(
+public record PaymentDto(
     string CardName,
     string CardNumber,
     string Expiration,
