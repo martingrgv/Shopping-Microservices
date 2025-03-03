@@ -3,7 +3,7 @@ using Ordering.Application.Orders.Queries.GetOrders;
 
 namespace Ordering.API.Endpoints;
 
-public record GetOrdersResponse(IEnumerable<OrderDto> Orders);
+public record GetOrdersResponse(PaginatedResult<OrderDto> Orders);
 
 public class GetOrders : ICarterModule
 {
