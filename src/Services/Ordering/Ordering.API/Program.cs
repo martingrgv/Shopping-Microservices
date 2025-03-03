@@ -5,10 +5,12 @@ using Ordering.Infrastructure.Data.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var configuration = builder.Configuration;
+
 builder.Services
-    .AddPresentation()
+    .AddPresentation(configuration)
     .AddApplication()
-    .AddInfrastructure(builder.Configuration);
+    .AddInfrastructure(configuration);
 
 var app = builder.Build();
 
