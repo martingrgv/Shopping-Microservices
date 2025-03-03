@@ -15,11 +15,11 @@ public static class DependencyInjection
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
         
-        string connecitonString = configuration.GetConnectionString("Database");
+        string connectionString = configuration.GetConnectionString("Database") ?? throw new ArgumentNullException("Connection string cannot be empty");
         services.AddDbContext<ApplicationDbContext>((sp, options) =>
         {
             options.AddInterceptors(sp.GetService<ISaveChangesInterceptor>());
-            options.UseSqlServer(connecitonString);
+            options.UseSqlServer(connectionString);
         });
 
         services.AddScoped<IApplicationDbContext, ApplicationDbContext>();

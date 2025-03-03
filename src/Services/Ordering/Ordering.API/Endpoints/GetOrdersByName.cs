@@ -2,16 +2,15 @@ using Ordering.Application.Orders.Queries.GetOrdersByName;
 
 namespace Ordering.API.Endpoints;
 
-public record GetOrdersByNameRequest(string Name);
 public record GetOrdersByNameResponse(IEnumerable<OrderDto> Orders);
 
-public class GetOdersByName : ICarterModule
+public class GetOrdersByName : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/orders/{orderName}", async (GetOrdersByNameRequest request, ISender sender) =>
+        app.MapGet("/orders/{orderName}", async (string orderName, ISender sender) =>
         {
-            var query = request.Adapt<GetOrdersByNameQuery>();
+            var query = new GetOrdersByNameQuery(orderName);
 
             var result = await sender.Send(query);
 

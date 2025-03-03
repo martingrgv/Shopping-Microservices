@@ -3,16 +3,15 @@ using Ordering.Application.Orders.Queries.GetOrdersByCustomer;
 
 namespace Ordering.API.Endpoints;
 
-public record GetOrdersByCustomerRequest(Guid CustomerId);
 public record GetOrdersByCustomerResponse(IEnumerable<OrderDto> Order);
 
 public class GetOrdersByCustomer : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/orders/customer/{customerId}", async (GetOrdersByCustomerRequest request, ISender sender) =>
+        app.MapGet("/orders/customer/{customerId}", async (Guid customerId, ISender sender) =>
             {
-                var query = request.Adapt<GetOrdersByCustomerQuery>();
+                var query = new GetOrdersByCustomerQuery(customerId);
 
                 var result = await sender.Send(query);
 

@@ -3,16 +3,15 @@ using Ordering.Application.Orders.Queries.GetOrders;
 
 namespace Ordering.API.Endpoints;
 
-public record GetOrdersRequest(PaginationRequest PaginationRequest);
 public record GetOrdersResponse(IEnumerable<OrderDto> Orders);
 
 public class GetOrders : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapGet("/orders", async ([AsParameters] GetOrdersRequest request, ISender sender) =>
+        app.MapGet("/orders", async ([AsParameters] PaginationRequest request, ISender sender) =>
             {
-                var query = request.Adapt<GetOrdersQuery>();
+                var query = new GetOrdersQuery(request);
 
                 var result = await sender.Send(query);
 
