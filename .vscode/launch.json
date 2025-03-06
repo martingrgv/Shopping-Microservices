@@ -1,0 +1,18 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "YarpApiGateway Debug",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "dotnet: build",
+            "program": "${workspaceFolder}/src/ApiGateways/YarpApiGateway/bin/Debug/net8.0/YarpApiGateway.dll",
+            "cwd": "${workspaceFolder}/src/ApiGateways/YarpApiGateway",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
+
+    ]
+}
