@@ -1,3 +1,3 @@
-namespace Shopping.Web.Models.Basket.Responses;
+namespace Shopping.Web.Models.Basket.Endpoint;
 
 public record GetBasketResponse(ShoppingCartModel Cart);
