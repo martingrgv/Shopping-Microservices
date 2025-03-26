@@ -1,3 +1,3 @@
 namespace Shopping.Web.Models.Basket.Endpoint;
 
-public record StoreBasketRequest();
+public record StoreBasketRequest(ShoppingCartModel Cart);
