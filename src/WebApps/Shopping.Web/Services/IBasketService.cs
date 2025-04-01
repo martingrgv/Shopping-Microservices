@@ -8,7 +8,7 @@ public interface IBasketService
     [Get("/basket-service/basket/{userName}")]
     Task<GetBasketResponse> GetBasket(string userName);
 
-    [Post("/basket-service/bakset")]
+    [Post("/basket-service/basket")]
     Task<StoreBasketResponse> StoreBasket(StoreBasketRequest request);
 
     [Delete("/basket-service/basket/{userName}")]
@@ -19,7 +19,7 @@ public interface IBasketService
     
     async Task<ShoppingCartModel> LoadUserBasket()
     {
-        var userName = "swn";
+        var userName = "Martin Wilson";
         ShoppingCartModel basket;
 
         try
